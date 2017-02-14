@@ -42,5 +42,24 @@ public class AccountServlet extends HttpServlet {
         response.setDateHeader("Expires", 0);
     }
 
-    
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        System.out.println(request.getParameterNames().nextElement());
+        switch(request.getParameterNames().nextElement()){
+            case "withdraw": instance.withdraw(Double.parseDouble(request.getParameter("withdraw")));
+                            break;
+            case "deposit": instance.deposit(Double.parseDouble(request.getParameter("deposit")));
+                            break;
+            case "close": instance.close();
+                            break;
+        }
+        
+        try (PrintWriter out = response.getWriter()){
+            out.println(instance.getBalance());
+        }
+        
+        response.setHeader("Cache-Control", "private, no-store, no-cache, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
+    }
 }
