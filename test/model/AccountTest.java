@@ -16,42 +16,57 @@
 
 package model;
 
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.BeforeClass;
 
 /**
  * Tests for the Account class
  */
 public class AccountTest {
     
+    Account account;
+    
     public AccountTest() {
     }
 
-    @Test
-    public void testGetBalanceIsZeroOnNewAccount() {
-        Account instance = new Account();
-        double expResult = 0.0;
-        double result = instance.getBalance();
-        assertEquals(expResult, result, 0.0);
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+    }
+
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+    }
+
+    @Before
+    public void setUp() throws Exception {
+        account = new Account();
+    }
+
+    @After
+    public void tearDown() throws Exception {
     }
 
     @Test
-    public void testGetBalanceIs500AfterDeposit500() {
-        double cash = 500.0;
-        Account instance = new Account();
-        instance.deposit(cash);
-        double expResult = 500.0;
-        double result = instance.getBalance();
-        assertEquals(expResult, result, 0.0);
-    }
-
-    @Test
-    public void testGetBalanceIs100AfterDeposit500ThenWithdraw400() {
+    public void stGetBalanceIs100AfterDeposit500ThenWithdraw400() {
         
+        account.deposit(500.00);
+        account.withdraw(400.00);
+        account.getBalance();
+        double expResult = 100.00;
+        double result = account.getBalance();
+        assertEquals(expResult, result, 0.0);
     }
-    
-    @Test
-    public void testGetBalanceIsZeroAfterDeposit500ThenClose() {
+    @Test 
+    public void stGetBalanceIsZeroAfterDeposit500ThenClose(){
+        account.deposit(500.00);
+        account.close();
+        double expResult = 0.00;
+        double result = account.getBalance();
+        assertEquals(expResult, result,0.0);
         
     }
 }
